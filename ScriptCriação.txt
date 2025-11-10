@@ -1,0 +1,41 @@
+// 1. Criar Entidades (Nós)
+
+// Usuário
+MERGE (u:User {name: 'Alice'})
+
+// Filmes e Séries
+MERGE (m1:Movie {title: 'Inception'})
+MERGE (m2:Movie {title: 'The Matrix'})
+MERGE (s1:Series {title: 'Black Mirror'})
+
+// Gêneros
+MERGE (g1:Genre {name: 'Sci-Fi'})
+MERGE (g2:Genre {name: 'Thriller'})
+
+// Atores e Diretores
+MERGE (a1:Actor {name: 'Leonardo DiCaprio'})
+MERGE (a2:Actor {name: 'Keanu Reeves'})
+MERGE (d1:Director {name: 'Christopher Nolan'})
+MERGE (d2:Director {name: 'Lana Wachowski'})
+
+// 2. Criar Conexões (Relacionamentos)
+
+// Alice assistiu
+MERGE (u)-[:WATCHED {rating: 5}]->(m1) // Alice -> Inception
+MERGE (u)-[:WATCHED {rating: 4}]->(m2) // Alice -> The Matrix
+MERGE (u)-[:WATCHED {rating: 5}]->(s1) // Alice -> Black Mirror
+
+// Atores atuaram em filmes
+MERGE (a1)-[:ACTED_IN]->(m1) // DiCaprio -> Inception
+MERGE (a2)-[:ACTED_IN]->(m2) // Keanu Reeves -> The Matrix
+
+// Diretores dirigiram filmes
+MERGE (d1)-[:DIRECTED]->(m1) // Nolan -> Inception
+MERGE (d2)-[:DIRECTED]->(m2) // Wachowski -> The Matrix
+
+// Filmes e séries estão em gêneros
+MERGE (m1)-[:IN_GENRE]->(g1) // Inception -> Sci-Fi
+MERGE (m1)-[:IN_GENRE]->(g2) // Inception -> Thriller
+MERGE (m2)-[:IN_GENRE]->(g1) // The Matrix -> Sci-Fi
+MERGE (s1)-[:IN_GENRE]->(g1) // Black Mirror -> Sci-Fi
+MERGE (s1)-[:IN_GENRE]->(g2) // Black Mirror -> Thriller
